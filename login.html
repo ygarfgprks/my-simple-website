@@ -72,14 +72,14 @@
 
             if (user) {
                 localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('isAdmin', user.role === 'admin' ? 'true' : 'false');
+                localStorage.setItem('currentUser', JSON.stringify(user));
                 
                 if (user.role === 'admin') {
                     alert('Login sebagai Admin berhasil!');
                     window.location.href = 'admin.html'; // Redirect ke halaman admin
                 } else {
                     alert('Login berhasil!');
-                    window.location.href = 'index.html'; // Redirect ke halaman user
+                    window.location.href = 'profile.html'; // Redirect ke halaman user
                 }
             } else {
                 alert('Username atau password salah!');
@@ -94,7 +94,7 @@
         <input type="password" id="password" placeholder="Masukkan password" required>
         <button onclick="login()">Login</button>
         <a href="register.html">Daftar sebagai User</a>
-        <a href="admin.html" id="adminLink" style="display:none;">Halaman Admin</a> <!-- Link admin hanya untuk admin -->
+        <!-- Link admin akan dihapus karena hanya admin yang bisa mengakses admin.html setelah login -->
     </div>
 </body>
 </html>
