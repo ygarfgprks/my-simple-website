@@ -34,24 +34,29 @@
         button.delete {
             background-color: #dc3545;
         }
+        form {
+            margin-bottom: 20px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
     <h1>Halaman Administrator</h1>
     
-    <h2>Daftar Pengguna</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody id="userTable">
-            <!-- Data user akan dimuat di sini -->
-        </tbody>
-    </table>
+    <h2>Tambah Data Alumni</h2>
+    <form id="addAlumniForm">
+        <input type="text" id="nama" placeholder="Nama" required>
+        <textarea id="riwayatPendidikan" placeholder="Riwayat Pendidikan" required></textarea>
+        <textarea id="riwayatPekerjaan" placeholder="Riwayat Pekerjaan" required></textarea>
+        <input type="text" id="kontak" placeholder="Kontak" required>
+        <button type="submit">Tambah Alumni</button>
+    </form>
 
     <h2>Daftar Alumni</h2>
     <table>
@@ -70,24 +75,6 @@
     </table>
 
     <script>
-        function loadUsers() {
-            let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-            let userTable = document.getElementById('userTable');
-            userTable.innerHTML = '';
-
-            users.forEach((user, index) => {
-                let row = `<tr>
-                    <td>${user.username}</td>
-                    <td>${user.role ? user.role : 'user'}</td>
-                    <td>
-                        <button onclick="editUser(${index})">Edit</button>
-                        <button class="delete" onclick="deleteUser(${index})">Hapus</button>
-                    </td>
-                </tr>`;
-                userTable.innerHTML += row;
-            });
-        }
-
         function loadAlumni() {
             let alumni = localStorage.getItem('alumni') ? JSON.parse(localStorage.getItem('alumni')) : [];
             let alumniTable = document.getElementById('alumniTable');
@@ -108,13 +95,6 @@
             });
         }
 
-        function deleteUser(index) {
-            let users = JSON.parse(localStorage.getItem('users'));
-            users.splice(index, 1);
-            localStorage.setItem('users', JSON.stringify(users));
-            loadUsers();
-        }
-
         function deleteAlumnus(index) {
             let alumni = JSON.parse(localStorage.getItem('alumni'));
             alumni.splice(index, 1);
@@ -122,18 +102,32 @@
             loadAlumni();
         }
 
-        function editUser(index) {
-            // Fitur edit user bisa dikembangkan lebih lanjut
-            alert('Fitur Edit User akan ditambahkan kemudian');
-        }
-
         function editAlumnus(index) {
             // Fitur edit alumni bisa dikembangkan lebih lanjut
             alert('Fitur Edit Alumni akan ditambahkan kemudian');
         }
 
+        document.getElementById('addAlumniForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let nama = document.getElementById('nama').value;
+            let riwayatPendidikan = document.getElementById('riwayatPendidikan').value;
+            let riwayatPekerjaan = document.getElementById('riwayatPekerjaan').value;
+            let kontak = document.getElementById('kontak').value;
+
+            let alumni = localStorage.getItem('alumni') ? JSON.parse(localStorage.getItem('alumni')) : [];
+
+            alumni.push({ nama, riwayatPendidikan, riwayatPekerjaan, kontak });
+            localStorage.setItem('alumni', JSON.stringify(alumni));
+
+            // Bersihkan form setelah data ditambahkan
+            document.getElementById('addAlumniForm').reset();
+            
+            // Muat ulang daftar alumni
+            loadAlumni();
+        });
+
         window.onload = function() {
-            loadUsers();
             loadAlumni();
         };
     </script>
