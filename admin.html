@@ -54,7 +54,6 @@
 
     <div class="button-container">
         <button onclick="window.location.href='index.html'">Kembali ke Index</button>
-        <button onclick="window.location.href='admin.html'" id="adminButton" style="display:none;">Halaman Admin</button> <!-- Tombol admin hanya untuk admin -->
         <button onclick="logout()">Logout</button>
     </div>
     
@@ -117,7 +116,7 @@
             users.forEach((user, index) => {
                 let row = `<tr>
                     <td>${user.username}</td>
-                    <td>${user.role ? user.role : 'user'}</td>
+                    <td>${user.role}</td>
                     <td>
                         <button onclick="editUser(${index})">Edit</button>
                         <button class="delete" onclick="deleteUser(${index})">Hapus</button>
@@ -168,6 +167,7 @@
             document.getElementById('password').value = user.password;
             document.getElementById('role').value = user.role;
 
+            // Remove the user from the list so that it can be updated
             users.splice(index, 1);
             localStorage.setItem('users', JSON.stringify(users));
             loadUsers();
@@ -181,6 +181,7 @@
             document.getElementById('riwayatPekerjaan').value = alumnus.riwayatPekerjaan;
             document.getElementById('kontak').value = alumnus.kontak;
 
+            // Remove the alumnus from the list so that it can be updated
             alumni.splice(index, 1);
             localStorage.setItem('alumni', JSON.stringify(alumni));
             loadAlumni();
