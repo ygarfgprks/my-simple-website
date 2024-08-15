@@ -43,6 +43,27 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        .actions button {
+            margin-left: 5px;
         }
         a {
             display: block;
@@ -74,16 +95,42 @@
 
             let alumni = localStorage.getItem('alumniList') ? JSON.parse(localStorage.getItem('alumniList')) : [];
 
-            alumni.forEach(function(alumni) {
+            alumni.forEach((alumni, index) => {
                 let li = document.createElement('li');
                 li.innerHTML = `
                     <strong>Nama:</strong> ${alumni.name} <br>
                     <strong>Riwayat Pendidikan:</strong> ${alumni.educationHistory} <br>
                     <strong>Riwayat Pekerjaan:</strong> ${alumni.workHistory} <br>
                     <strong>Kontak:</strong> ${alumni.contactInfo}
+                    <div class="actions">
+                        <button onclick="editAlumni(${index})">Edit</button>
+                        <button onclick="deleteAlumni(${index})">Hapus</button>
+                    </div>
                 `;
                 alumniList.appendChild(li);
             });
+        }
+
+        function editAlumni(index) {
+            // Ambil data dari LocalStorage
+            let alumni = JSON.parse(localStorage.getItem('alumniList'));
+            let selectedAlumni = alumni[index];
+
+            // Arahkan ke halaman edit dengan data
+            if (selectedAlumni) {
+                localStorage.setItem('editIndex', index); // Simpan index untuk edit
+                window.location.href = 'edit-alumni.html';
+            }
+        }
+
+        function deleteAlumni(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus alumni ini?')) {
+                // Hapus data dari LocalStorage
+                let alumni = JSON.parse(localStorage.getItem('alumniList'));
+                alumni.splice(index, 1);
+                localStorage.setItem('alumniList', JSON.stringify(alumni));
+                updateAlumniList(); // Update daftar setelah penghapusan
+            }
         }
 
         // Tampilkan alumni saat halaman dimuat
