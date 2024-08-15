@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Administrator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        button.delete {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <h1>Halaman Administrator</h1>
+    <h2>Daftar Pengguna</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="userTable">
+            <!-- Data user akan dimuat di sini -->
+        </tbody>
+    </table>
+
+    <script>
+        function loadUsers() {
+            let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+            let userTable = document.getElementById('userTable');
+            userTable.innerHTML = '';
+
+            users.forEach((user, index) => {
+                let row = `<tr>
+                    <td>${user.username}</td>
+                    <td>${user.role ? user.role : 'user'}</td>
+                    <td>
+                        <button onclick="editUser(${index})">Edit</button>
+                        <button class="delete" onclick="deleteUser(${index})">Hapus</button>
+                    </td>
+                </tr>`;
+                userTable.innerHTML += row;
+            });
+        }
+
+        function deleteUser(index) {
+            let users = JSON.parse(localStorage.getItem('users'));
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUsers();
+        }
+
+        function editUser(index) {
+            // Fitur edit user bisa dikembangkan lebih lanjut
+            alert('Fitur Edit User akan ditambahkan kemudian');
+        }
+
+        window.onload = loadUsers;
+    </script>
+</body>
+</html>
