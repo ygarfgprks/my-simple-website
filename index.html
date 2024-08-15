@@ -89,6 +89,11 @@
     </div>
 
     <script>
+        // Cek apakah pengguna sudah login
+        if (localStorage.getItem('loggedIn') !== 'true') {
+            window.location.href = 'login.html'; // Redirect ke halaman login jika belum login
+        }
+
         function updateAlumniList() {
             const alumniList = document.getElementById('alumniList');
             alumniList.innerHTML = '';
