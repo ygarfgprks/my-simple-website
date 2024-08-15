@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Nama Alumni</title>
+    <title>Input Data Alumni</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,7 +12,7 @@
             background-color: #f4f4f4;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: auto;
             background: white;
             padding: 20px;
@@ -22,7 +22,7 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        input[type="text"] {
+        input[type="text"], textarea {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -53,23 +53,33 @@
 </head>
 <body>
     <div class="container">
-        <h1>Input Nama Alumni</h1>
-        <input type="text" id="alumniName" placeholder="Masukkan nama alumni" />
-        <button onclick="addAlumni()">Tambahkan Nama</button>
+        <h1>Input Data Alumni</h1>
+        <input type="text" id="alumniName" placeholder="Nama Alumni" />
+        <input type="text" id="educationHistory" placeholder="Riwayat Pendidikan" />
+        <input type="text" id="workHistory" placeholder="Riwayat Pekerjaan" />
+        <input type="text" id="contactInfo" placeholder="Kontak" />
+        <button onclick="addAlumni()">Tambahkan Data Alumni</button>
         <a href="index.html">Kembali ke Daftar Alumni</a>
     </div>
 
     <script>
         function addAlumni() {
             const name = document.getElementById('alumniName').value;
-            if (name) {
+            const educationHistory = document.getElementById('educationHistory').value;
+            const workHistory = document.getElementById('workHistory').value;
+            const contactInfo = document.getElementById('contactInfo').value;
+
+            if (name && educationHistory && workHistory && contactInfo) {
                 // Simpan ke LocalStorage
                 let alumni = localStorage.getItem('alumniList') ? JSON.parse(localStorage.getItem('alumniList')) : [];
-                alumni.push(name);
+                alumni.push({ name, educationHistory, workHistory, contactInfo });
                 localStorage.setItem('alumniList', JSON.stringify(alumni));
 
                 // Kosongkan input
                 document.getElementById('alumniName').value = '';
+                document.getElementById('educationHistory').value = '';
+                document.getElementById('workHistory').value = '';
+                document.getElementById('contactInfo').value = '';
             }
         }
     </script>
