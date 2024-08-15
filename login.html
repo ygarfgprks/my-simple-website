@@ -46,11 +46,13 @@
     <script>
         function loginAsAdmin() {
             localStorage.setItem('isAdmin', 'true');
+            localStorage.setItem('loggedIn', 'true');
             window.location.href = 'index.html'; // Redirect ke halaman daftar alumni
         }
 
         function loginAsUser() {
             localStorage.setItem('isAdmin', 'false');
+            localStorage.setItem('loggedIn', 'true');
             window.location.href = 'index.html'; // Redirect ke halaman daftar alumni
         }
     </script>
