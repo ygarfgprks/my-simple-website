@@ -12,7 +12,7 @@
             background-color: #f4f4f4;
         }
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: auto;
             background: white;
             padding: 20px;
@@ -28,8 +28,8 @@
         }
         ul li {
             background: #f9f9f9;
-            margin: 5px 0;
-            padding: 10px;
+            margin: 10px 0;
+            padding: 15px;
             border: 1px solid #ddd;
         }
         a {
@@ -58,9 +58,14 @@
 
             let alumni = localStorage.getItem('alumniList') ? JSON.parse(localStorage.getItem('alumniList')) : [];
 
-            alumni.forEach(function(name) {
+            alumni.forEach(function(alumni) {
                 let li = document.createElement('li');
-                li.appendChild(document.createTextNode(name));
+                li.innerHTML = `
+                    <strong>Nama:</strong> ${alumni.name} <br>
+                    <strong>Riwayat Pendidikan:</strong> ${alumni.educationHistory} <br>
+                    <strong>Riwayat Pekerjaan:</strong> ${alumni.workHistory} <br>
+                    <strong>Kontak:</strong> ${alumni.contactInfo}
+                `;
                 alumniList.appendChild(li);
             });
         }
