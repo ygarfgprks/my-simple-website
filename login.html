@@ -77,24 +77,6 @@
 
     <script>
         function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-            let user = users.find(user => user.username === username && user.password === password);
-
-            if (user) {
-                localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('isAdmin', 'false'); // Sesuaikan jika ada admin
-                alert('Login berhasil!');
-                window.location.href = 'index.html'; // Redirect ke halaman daftar alumni
-            } else {
-                alert('Username atau password salah!');
-            }
-        }
-    </script>
-
-    function login() {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     
@@ -116,6 +98,7 @@
         alert('Username atau password salah!');
     }
 }
+    </script>
 
 </body>
 </html>
