@@ -1,0 +1,9 @@
+<a href="#" onclick="logout()">Logout</a>
+
+<script>
+    function logout() {
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('isAdmin');
+        window.location.href = 'login.html'; // Redirect ke halaman login
+    }
+</script>
