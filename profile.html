@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pengguna</title>
+    <style>
+        /* Your existing styles */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Profil Pengguna</h1>
+        <button onclick="logout()">Logout</button>
+
+        <form id="profileForm">
+            <input type="text" id="username" placeholder="Username" readonly>
+            <input type="password" id="password" placeholder="Password">
+            <button type="submit">Simpan Perubahan</button>
+        </form>
+    </div>
+
+    <script>
+        function loadProfile() {
+            let user = localStorage.getItem('currentUser') ? JSON.parse(localStorage.getItem('currentUser')) : null;
+            if (user) {
+                document.getElementById('username').value = user.username;
+                document.getElementById('password').value = user.password;
+            } else {
+                window.location.href = 'login.html'; // Redirect to login if no user
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html'; // Redirect to login
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+
+            let users = JSON.parse(localStorage.getItem('users'));
+            let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            // Find the user and update their details
+            let user = users.find(user => user.username === currentUser.username);
+            if (user) {
+                user.password = password;
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(user)); // Update current user
+                alert('Profil berhasil diperbarui!');
+            }
+        });
+
+        window.onload = function() {
+            loadProfile();
+        };
+    </script>
+</body>
+</html>
