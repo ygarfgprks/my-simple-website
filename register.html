@@ -47,20 +47,26 @@
     <div class="register-container">
         <h1>Daftar</h1>
         <input type="text" id="username" placeholder="Masukkan username">
+        <input type="password" id="password" placeholder="Masukkan password">
         <button onclick="registerUser()">Daftar</button>
     </div>
 
     <script>
         function registerUser() {
             const username = document.getElementById('username').value;
-            if (username) {
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
                 let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-                users.push({ username: username });
+                
+                // Simpan username dan password ke localStorage
+                users.push({ username: username, password: password });
                 localStorage.setItem('users', JSON.stringify(users));
+                
                 alert('Pendaftaran berhasil!');
                 window.location.href = 'login.html'; // Redirect ke halaman login setelah pendaftaran
             } else {
-                alert('Username tidak boleh kosong!');
+                alert('Username dan password tidak boleh kosong!');
             }
         }
     </script>
