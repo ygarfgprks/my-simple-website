@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <script>
-    // Menambahkan akun admin ke localStorage saat halaman pertama kali dimuat
-    window.onload = function() {
-        let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-        let adminExists = users.find(user => user.username === 'admin');
-
-        if (!adminExists) {
-            users.push({ username: 'admin', password: 'admin123', role: 'admin' });
-            localStorage.setItem('users', JSON.stringify(users));
-        }
-    }
-</script>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
@@ -65,40 +51,50 @@
             text-decoration: underline;
         }
     </style>
+    <script>
+        // Menambahkan akun admin ke localStorage saat halaman pertama kali dimuat
+        window.onload = function() {
+            let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+            let adminExists = users.find(user => user.username === 'admin');
+
+            if (!adminExists) {
+                users.push({ username: 'admin', password: 'admin123', role: 'admin' });
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+            let user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('isAdmin', user.role === 'admin' ? 'true' : 'false');
+                
+                if (user.role === 'admin') {
+                    alert('Login sebagai Admin berhasil!');
+                    window.location.href = 'admin.html'; // Redirect ke halaman admin
+                } else {
+                    alert('Login berhasil!');
+                    window.location.href = 'index.html'; // Redirect ke halaman user
+                }
+            } else {
+                alert('Username atau password salah!');
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="login-container">
         <h1>Login</h1>
-        <input type="text" id="username" placeholder="Masukkan username">
-        <input type="password" id="password" placeholder="Masukkan password">
+        <input type="text" id="username" placeholder="Masukkan username" required>
+        <input type="password" id="password" placeholder="Masukkan password" required>
         <button onclick="login()">Login</button>
         <a href="register.html">Daftar sebagai User</a>
+        <a href="admin.html" id="adminLink" style="display:none;">Halaman Admin</a> <!-- Link admin hanya untuk admin -->
     </div>
-
-    <script>
-        function login() {
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    
-    let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-    let user = users.find(user => user.username === username && user.password === password);
-
-    if (user) {
-        localStorage.setItem('loggedIn', 'true');
-        localStorage.setItem('isAdmin', user.role === 'admin' ? 'true' : 'false');
-        
-        if (user.role === 'admin') {
-            alert('Login sebagai Admin berhasil!');
-            window.location.href = 'admin.html'; // Redirect ke halaman admin
-        } else {
-            alert('Login berhasil!');
-            window.location.href = 'index.html'; // Redirect ke halaman user
-        }
-    } else {
-        alert('Username atau password salah!');
-    }
-}
-    </script>
-
 </body>
 </html>
