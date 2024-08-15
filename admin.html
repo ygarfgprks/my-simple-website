@@ -54,6 +54,8 @@
 
     <div class="button-container">
         <button onclick="window.location.href='index.html'">Kembali ke Index</button>
+        <button onclick="window.location.href='admin.html'" id="adminButton" style="display:none;">Halaman Admin</button> <!-- Tombol admin hanya untuk admin -->
+        <button onclick="logout()">Logout</button>
     </div>
     
     <h2>Tambah Data User/Admin</h2>
@@ -184,6 +186,12 @@
             loadAlumni();
         }
 
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('isAdmin');
+            window.location.href = 'login.html'; // Redirect ke halaman login
+        }
+
         document.getElementById('addUserForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -218,6 +226,10 @@
         });
 
         window.onload = function() {
+            let isAdmin = localStorage.getItem('isAdmin') === 'true';
+            if (!isAdmin) {
+                window.location.href = 'login.html'; // Redirect ke halaman login jika bukan admin
+            }
             loadUsers();
             loadAlumni();
         };
