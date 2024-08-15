@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <script>
+    // Menambahkan akun admin ke localStorage saat halaman pertama kali dimuat
+    window.onload = function() {
+        let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+        let adminExists = users.find(user => user.username === 'admin');
+
+        if (!adminExists) {
+            users.push({ username: 'admin', password: 'admin123', role: 'admin' });
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+    }
+</script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
