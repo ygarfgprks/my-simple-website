@@ -49,6 +49,17 @@
 <body>
     <h1>Halaman Administrator</h1>
     
+    <h2>Tambah Data User/Admin</h2>
+    <form id="addUserForm">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <select id="role">
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+        <button type="submit">Tambah User/Admin</button>
+    </form>
+
     <h2>Tambah Data Alumni</h2>
     <form id="addAlumniForm">
         <input type="text" id="nama" placeholder="Nama" required>
@@ -57,6 +68,20 @@
         <input type="text" id="kontak" placeholder="Kontak" required>
         <button type="submit">Tambah Alumni</button>
     </form>
+
+    <h2>Daftar User/Admin</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="userTable">
+            <!-- Data user/admin akan dimuat di sini -->
+        </tbody>
+    </table>
 
     <h2>Daftar Alumni</h2>
     <table>
@@ -75,6 +100,24 @@
     </table>
 
     <script>
+        function loadUsers() {
+            let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+            let userTable = document.getElementById('userTable');
+            userTable.innerHTML = '';
+
+            users.forEach((user, index) => {
+                let row = `<tr>
+                    <td>${user.username}</td>
+                    <td>${user.role ? user.role : 'user'}</td>
+                    <td>
+                        <button onclick="editUser(${index})">Edit</button>
+                        <button class="delete" onclick="deleteUser(${index})">Hapus</button>
+                    </td>
+                </tr>`;
+                userTable.innerHTML += row;
+            });
+        }
+
         function loadAlumni() {
             let alumni = localStorage.getItem('alumni') ? JSON.parse(localStorage.getItem('alumni')) : [];
             let alumniTable = document.getElementById('alumniTable');
@@ -95,6 +138,13 @@
             });
         }
 
+        function deleteUser(index) {
+            let users = JSON.parse(localStorage.getItem('users'));
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUsers();
+        }
+
         function deleteAlumnus(index) {
             let alumni = JSON.parse(localStorage.getItem('alumni'));
             alumni.splice(index, 1);
@@ -102,10 +152,46 @@
             loadAlumni();
         }
 
-        function editAlumnus(index) {
-            // Fitur edit alumni bisa dikembangkan lebih lanjut
-            alert('Fitur Edit Alumni akan ditambahkan kemudian');
+        function editUser(index) {
+            let users = JSON.parse(localStorage.getItem('users'));
+            let user = users[index];
+            document.getElementById('username').value = user.username;
+            document.getElementById('password').value = user.password;
+            document.getElementById('role').value = user.role;
+
+            users.splice(index, 1);
+            localStorage.setItem('users', JSON.stringify(users));
+            loadUsers();
         }
+
+        function editAlumnus(index) {
+            let alumni = JSON.parse(localStorage.getItem('alumni'));
+            let alumnus = alumni[index];
+            document.getElementById('nama').value = alumnus.nama;
+            document.getElementById('riwayatPendidikan').value = alumnus.riwayatPendidikan;
+            document.getElementById('riwayatPekerjaan').value = alumnus.riwayatPekerjaan;
+            document.getElementById('kontak').value = alumnus.kontak;
+
+            alumni.splice(index, 1);
+            localStorage.setItem('alumni', JSON.stringify(alumni));
+            loadAlumni();
+        }
+
+        document.getElementById('addUserForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let username = document.getElementById('username').value;
+            let password = document.getElementById('password').value;
+            let role = document.getElementById('role').value;
+
+            let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+
+            users.push({ username, password, role });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            document.getElementById('addUserForm').reset();
+            loadUsers();
+        });
 
         document.getElementById('addAlumniForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -120,14 +206,12 @@
             alumni.push({ nama, riwayatPendidikan, riwayatPekerjaan, kontak });
             localStorage.setItem('alumni', JSON.stringify(alumni));
 
-            // Bersihkan form setelah data ditambahkan
             document.getElementById('addAlumniForm').reset();
-            
-            // Muat ulang daftar alumni
             loadAlumni();
         });
 
         window.onload = function() {
+            loadUsers();
             loadAlumni();
         };
     </script>
