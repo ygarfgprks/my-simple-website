@@ -52,7 +52,6 @@
         }
     </style>
     <script>
-        // Menambahkan akun admin ke localStorage saat halaman pertama kali dimuat
         window.onload = function() {
             let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
             let adminExists = users.find(user => user.username === 'admin');
@@ -72,14 +71,12 @@
 
             if (user) {
                 localStorage.setItem('loggedIn', 'true');
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                
+                localStorage.setItem('isAdmin', user.role === 'admin' ? 'true' : 'false');
+
                 if (user.role === 'admin') {
-                    alert('Login sebagai Admin berhasil!');
                     window.location.href = 'admin.html'; // Redirect ke halaman admin
                 } else {
-                    alert('Login berhasil!');
-                    window.location.href = 'profile.html'; // Redirect ke halaman user
+                    window.location.href = 'index.html'; // Redirect ke halaman user
                 }
             } else {
                 alert('Username atau password salah!');
@@ -94,7 +91,6 @@
         <input type="password" id="password" placeholder="Masukkan password" required>
         <button onclick="login()">Login</button>
         <a href="register.html">Daftar sebagai User</a>
-        <!-- Link admin akan dihapus karena hanya admin yang bisa mengakses admin.html setelah login -->
     </div>
 </body>
 </html>
