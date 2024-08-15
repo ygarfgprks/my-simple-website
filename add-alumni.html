@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Nama Alumni</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Input Nama Alumni</h1>
+        <input type="text" id="alumniName" placeholder="Masukkan nama alumni" />
+        <button onclick="addAlumni()">Tambahkan Nama</button>
+        <a href="index.html">Kembali ke Daftar Alumni</a>
+    </div>
+
+    <script>
+        function addAlumni() {
+            const name = document.getElementById('alumniName').value;
+            if (name) {
+                // Simpan ke LocalStorage
+                let alumni = localStorage.getItem('alumniList') ? JSON.parse(localStorage.getItem('alumniList')) : [];
+                alumni.push(name);
+                localStorage.setItem('alumniList', JSON.stringify(alumni));
+
+                // Kosongkan input
+                document.getElementById('alumniName').value = '';
+            }
+        }
+    </script>
+</body>
+</html>
