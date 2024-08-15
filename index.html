@@ -94,6 +94,7 @@
             alumniList.innerHTML = '';
 
             let alumni = localStorage.getItem('alumniList') ? JSON.parse(localStorage.getItem('alumniList')) : [];
+            let isAdmin = localStorage.getItem('isAdmin') === 'true'; // Cek apakah pengguna adalah admin
 
             alumni.forEach((alumni, index) => {
                 let li = document.createElement('li');
@@ -102,11 +103,15 @@
                     <strong>Riwayat Pendidikan:</strong> ${alumni.educationHistory} <br>
                     <strong>Riwayat Pekerjaan:</strong> ${alumni.workHistory} <br>
                     <strong>Kontak:</strong> ${alumni.contactInfo}
-                    <div class="actions">
-                        <button onclick="editAlumni(${index})">Edit</button>
-                        <button onclick="deleteAlumni(${index})">Hapus</button>
-                    </div>
                 `;
+                if (isAdmin) {
+                    li.innerHTML += `
+                        <div class="actions">
+                            <button onclick="editAlumni(${index})">Edit</button>
+                            <button onclick="deleteAlumni(${index})">Hapus</button>
+                        </div>
+                    `;
+                }
                 alumniList.appendChild(li);
             });
         }
