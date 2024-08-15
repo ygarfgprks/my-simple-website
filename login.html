@@ -93,5 +93,29 @@
             }
         }
     </script>
+
+    function login() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+    let user = users.find(user => user.username === username && user.password === password);
+
+    if (user) {
+        localStorage.setItem('loggedIn', 'true');
+        localStorage.setItem('isAdmin', user.role === 'admin' ? 'true' : 'false');
+        
+        if (user.role === 'admin') {
+            alert('Login sebagai Admin berhasil!');
+            window.location.href = 'admin.html'; // Redirect ke halaman admin
+        } else {
+            alert('Login berhasil!');
+            window.location.href = 'index.html'; // Redirect ke halaman user
+        }
+    } else {
+        alert('Username atau password salah!');
+    }
+}
+
 </body>
 </html>
