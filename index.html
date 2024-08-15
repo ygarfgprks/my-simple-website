@@ -18,6 +18,7 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            position: relative;
         }
         .header {
             text-align: center;
@@ -91,6 +92,20 @@
         .logout-btn:hover {
             background-color: #c82333;
         }
+        .admin-btn {
+            position: absolute;
+            top: 10px;
+            right: 100px;
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .admin-btn:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -99,6 +114,7 @@
             <img src="https://web.sman3jombang.sch.id/wp-content/uploads/2021/04/smaga.png" alt="Logo Alumni">
             <h1>Daftar Alumni</h1>
             <a href="#" class="logout-btn" onclick="logout()">Logout</a>
+            <a href="admin.html" class="admin-btn" id="adminButton" style="display: none;">Halaman Admin</a>
         </div>
         <ul id="alumniList"></ul>
         <a href="add-alumni.html">Tambah Alumni</a>
@@ -135,6 +151,9 @@
                 }
                 alumniList.appendChild(li);
             });
+
+            // Menampilkan tombol admin jika pengguna adalah admin
+            document.getElementById('adminButton').style.display = isAdmin ? 'block' : 'none';
         }
 
         function editAlumni(index) {
