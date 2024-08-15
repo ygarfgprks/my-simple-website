@@ -21,6 +21,13 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
         button {
             padding: 10px 20px;
             border: none;
@@ -48,22 +55,28 @@
 <body>
     <div class="login-container">
         <h1>Login</h1>
-        <button onclick="loginAsAdmin()">Login as Admin</button>
-        <button onclick="loginAsUser()">Login as User</button>
+        <input type="text" id="username" placeholder="Masukkan username">
+        <input type="password" id="password" placeholder="Masukkan password">
+        <button onclick="login()">Login</button>
         <a href="register.html">Daftar sebagai User</a>
     </div>
 
     <script>
-        function loginAsAdmin() {
-            localStorage.setItem('isAdmin', 'true');
-            localStorage.setItem('loggedIn', 'true');
-            window.location.href = 'index.html'; // Redirect ke halaman daftar alumni
-        }
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+            let user = users.find(user => user.username === username && user.password === password);
 
-        function loginAsUser() {
-            localStorage.setItem('isAdmin', 'false');
-            localStorage.setItem('loggedIn', 'true');
-            window.location.href = 'index.html'; // Redirect ke halaman daftar alumni
+            if (user) {
+                localStorage.setItem('loggedIn', 'true');
+                localStorage.setItem('isAdmin', 'false'); // Sesuaikan jika ada admin
+                alert('Login berhasil!');
+                window.location.href = 'index.html'; // Redirect ke halaman daftar alumni
+            } else {
+                alert('Username atau password salah!');
+            }
         }
     </script>
 </body>
