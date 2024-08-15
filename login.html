@@ -3,56 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Daftar Alumni</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
             margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
         }
-        .login-container {
+        .container {
+            max-width: 900px;
+            margin: auto;
             background: white;
             padding: 20px;
-            border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .header {
             text-align: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 8px;
+        }
+        h1 {
+            margin: 20px 0;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
         button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 10px;
             background-color: #007bff;
             color: white;
-            font-size: 16px;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0 5px;
         }
         button:hover {
             background-color: #0056b3;
         }
+        .actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        .actions button {
+            margin-left: 5px;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <button onclick="loginAsAdmin()">Login as Admin</button>
-        <button onclick="loginAsUser()">Login as User</button>
+    <div class="container">
+        <div class="header">
+            <img src="https://web.sman3jombang.sch.id/wp-content/uploads/2021/04/smaga.png" alt="Logo Alumni">
+            <h1>Daftar Alumni</h1>
+        </div>
+        <ul id="alumniList"></ul>
+        <a href="add-alumni.html">Tambah Alumni</a>
     </div>
 
     <script>
-        function loginAsAdmin() {
-            localStorage.setItem('isAdmin', 'true');
-            window.location.href = 'index.html'; // Redirect ke halaman daftar alumni
+        function updateAlumniList() {
+            const alumniList = document.getElementById('alumniList');
+            alumniList.innerHTML = '';
+
+            let alumni = localStorage.getItem('alumniList') ? JSON.parse(localStorage.getItem('alumniList')) : [];
+            let isAdmin = localStorage.getItem('isAdmin') === 'true'; // Cek apakah pengguna adalah admin
+
+            alumni.forEach((alumni, index) => {
+                let li = document.createElement('li');
+                li.innerHTML = `
+                    <strong>Nama:</strong> ${alumni.name} <br>
+                    <strong>Riwayat Pendidikan:</strong> ${alumni.educationHistory} <br>
+                    <strong>Riwayat Pekerjaan:</strong> ${alumni.workHistory} <br>
+                    <strong>Kontak:</strong> ${alumni.contactInfo}
+                `;
+                if (isAdmin) {
+                    li.innerHTML += `
+                        <div class="actions">
+                            <button onclick="editAlumni(${index})">Edit</button>
+                            <button onclick="deleteAlumni(${index})">Hapus</button>
+                        </div>
+                    `;
+                }
+                alumniList.appendChild(li);
+            });
         }
 
-        function loginAsUser() {
-            localStorage.setItem('isAdmin', 'false');
-            window.location.href = 'index.html'; // Redirect ke halaman daftar alumni
+        function editAlumni(index) {
+            // Ambil data dari LocalStorage
+            let alumni = JSON.parse(localStorage.getItem('alumniList'));
+            let selectedAlumni = alumni[index];
+
+            // Arahkan ke halaman edit dengan data
+            if (selectedAlumni) {
+                localStorage.setItem('editIndex', index); // Simpan index untuk edit
+                window.location.href = 'edit-alumni.html';
+            }
         }
+
+        function deleteAlumni(index) {
+            if (confirm('Apakah Anda yakin ingin menghapus alumni ini?')) {
+                // Hapus data dari LocalStorage
+                let alumni = JSON.parse(localStorage.getItem('alumniList'));
+                alumni.splice(index, 1);
+                localStorage.setItem('alumniList', JSON.stringify(alumni));
+                updateAlumniList(); // Update daftar setelah penghapusan
+            }
+        }
+
+        // Tampilkan alumni saat halaman dimuat
+        window.onload = function() {
+            updateAlumniList();
+        };
     </script>
 </body>
 </html>
