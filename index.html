@@ -7,30 +7,42 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: auto;
             background: white;
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
-        h1 {
+        .header {
             text-align: center;
             margin-bottom: 20px;
+        }
+        .header img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 8px;
+        }
+        h1 {
+            margin: 20px 0;
+            color: #333;
         }
         ul {
             list-style-type: none;
             padding: 0;
         }
         ul li {
-            background: #f9f9f9;
+            background: #fff;
             margin: 10px 0;
             padding: 15px;
             border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         a {
             display: block;
@@ -38,6 +50,7 @@
             margin-top: 20px;
             text-decoration: none;
             color: #007bff;
+            font-weight: bold;
         }
         a:hover {
             text-decoration: underline;
@@ -46,7 +59,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>Daftar Alumni</h1>
+        <div class="header">
+            <img src="https://web.sman3jombang.sch.id/wp-content/uploads/2021/04/smaga.png" alt="Logo Alumni">
+            <h1>Daftar Alumni</h1>
+        </div>
         <ul id="alumniList"></ul>
         <a href="add-alumni.html">Tambah Alumni</a>
     </div>
