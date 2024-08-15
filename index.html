@@ -22,6 +22,7 @@
         .header {
             text-align: center;
             margin-bottom: 20px;
+            position: relative;
         }
         .header img {
             max-width: 150px;
@@ -76,13 +77,28 @@
         a:hover {
             text-decoration: underline;
         }
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://web.sman3jombang.sch.id/wp-content/uploads/2021/04/smaga.png" alt="Logo Alumni">
+            <img src="images/logo.png" alt="Logo Alumni">
             <h1>Daftar Alumni</h1>
+            <a href="#" class="logout-btn" onclick="logout()">Logout</a>
         </div>
         <ul id="alumniList"></ul>
         <a href="add-alumni.html">Tambah Alumni</a>
@@ -141,6 +157,13 @@
                 localStorage.setItem('alumniList', JSON.stringify(alumni));
                 updateAlumniList(); // Update daftar setelah penghapusan
             }
+        }
+
+        // Fungsi logout
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            localStorage.removeItem('isAdmin');
+            window.location.href = 'login.html'; // Redirect ke halaman login
         }
 
         // Tampilkan alumni saat halaman dimuat
