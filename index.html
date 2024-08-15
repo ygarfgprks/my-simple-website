@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Alumni</title>
     <style>
-        /* ... (style seperti sebelumnya) ... */
+        /* Tambahkan style seperti sebelumnya */
     </style>
     <script>
         // Fungsi untuk memeriksa status login
@@ -17,7 +17,6 @@
             }
         }
 
-        // Panggil fungsi untuk memeriksa status login saat halaman dimuat
         window.onload = function() {
             checkLoginStatus();
             updateAlumniList();
@@ -27,7 +26,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="images/logo.png" alt="Logo Alumni">
+            <img src="https://web.sman3jombang.sch.id/wp-content/uploads/2021/04/smaga.png" alt="Logo Alumni">
             <h1>Daftar Alumni</h1>
         </div>
         <ul id="alumniList"></ul>
@@ -35,7 +34,6 @@
     </div>
 
     <script>
-        // Fungsi untuk memperbarui daftar alumni
         function updateAlumniList() {
             const alumniList = document.getElementById('alumniList');
             alumniList.innerHTML = '';
