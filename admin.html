@@ -13,6 +13,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
         table, th, td {
             border: 1px solid black;
@@ -37,6 +38,7 @@
 </head>
 <body>
     <h1>Halaman Administrator</h1>
+    
     <h2>Daftar Pengguna</h2>
     <table>
         <thead>
@@ -48,6 +50,22 @@
         </thead>
         <tbody id="userTable">
             <!-- Data user akan dimuat di sini -->
+        </tbody>
+    </table>
+
+    <h2>Daftar Alumni</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Riwayat Pendidikan</th>
+                <th>Riwayat Pekerjaan</th>
+                <th>Kontak</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="alumniTable">
+            <!-- Data alumni akan dimuat di sini -->
         </tbody>
     </table>
 
@@ -70,6 +88,26 @@
             });
         }
 
+        function loadAlumni() {
+            let alumni = localStorage.getItem('alumni') ? JSON.parse(localStorage.getItem('alumni')) : [];
+            let alumniTable = document.getElementById('alumniTable');
+            alumniTable.innerHTML = '';
+
+            alumni.forEach((alumnus, index) => {
+                let row = `<tr>
+                    <td>${alumnus.nama}</td>
+                    <td>${alumnus.riwayatPendidikan}</td>
+                    <td>${alumnus.riwayatPekerjaan}</td>
+                    <td>${alumnus.kontak}</td>
+                    <td>
+                        <button onclick="editAlumnus(${index})">Edit</button>
+                        <button class="delete" onclick="deleteAlumnus(${index})">Hapus</button>
+                    </td>
+                </tr>`;
+                alumniTable.innerHTML += row;
+            });
+        }
+
         function deleteUser(index) {
             let users = JSON.parse(localStorage.getItem('users'));
             users.splice(index, 1);
@@ -77,12 +115,27 @@
             loadUsers();
         }
 
+        function deleteAlumnus(index) {
+            let alumni = JSON.parse(localStorage.getItem('alumni'));
+            alumni.splice(index, 1);
+            localStorage.setItem('alumni', JSON.stringify(alumni));
+            loadAlumni();
+        }
+
         function editUser(index) {
             // Fitur edit user bisa dikembangkan lebih lanjut
             alert('Fitur Edit User akan ditambahkan kemudian');
         }
 
-        window.onload = loadUsers;
+        function editAlumnus(index) {
+            // Fitur edit alumni bisa dikembangkan lebih lanjut
+            alert('Fitur Edit Alumni akan ditambahkan kemudian');
+        }
+
+        window.onload = function() {
+            loadUsers();
+            loadAlumni();
+        };
     </script>
 </body>
 </html>
