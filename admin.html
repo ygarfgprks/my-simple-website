@@ -7,35 +7,47 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
             background: linear-gradient(to right, #0044ff, #00aaff); /* Gradasi biru */
             color: #333;
-            margin: 0;
-            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 1200px;
         }
         h1, h2 {
-            color: #fff;
+            color: #007bff;
+            margin: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
-            font-size: 2.5em;
         }
         h2 {
             margin-top: 20px;
             font-size: 1.8em;
-            border-bottom: 2px solid #fff;
-            padding-bottom: 10px;
         }
         .button-container {
-            margin-bottom: 20px;
             text-align: center;
+            margin-bottom: 20px;
         }
         button {
             padding: 10px 20px;
             margin: 5px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             background-color: #007bff;
             color: white;
@@ -53,7 +65,7 @@
             background-color: #c82333;
         }
         form {
-            background: #fff;
+            background: #f9f9f9;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -69,6 +81,7 @@
         }
         textarea {
             height: 100px;
+            resize: vertical;
         }
         table {
             width: 100%;
@@ -93,65 +106,76 @@
         tr:hover {
             background-color: #e1e1e1;
         }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <h1>Halaman Administrator</h1>
+    <div class="container">
+        <h1>Halaman Administrator</h1>
 
-    <div class="button-container">
-        <button onclick="window.location.href='index.html'">Kembali ke Index</button>
-        <button onclick="logout()">Logout</button>
+        <div class="button-container">
+            <button onclick="window.location.href='index.html'">Kembali ke Index</button>
+            <button onclick="logout()">Logout</button>
+        </div>
+        
+        <h2>Tambah Data User/Admin</h2>
+        <form id="addUserForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <select id="role">
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button type="submit">Tambah User/Admin</button>
+        </form>
+
+        <h2>Tambah Data Alumni</h2>
+        <form id="addAlumniForm">
+            <input type="text" id="nama" placeholder="Nama" required>
+            <textarea id="riwayatPendidikan" placeholder="Riwayat Pendidikan" required></textarea>
+            <textarea id="riwayatPekerjaan" placeholder="Riwayat Pekerjaan" required></textarea>
+            <input type="text" id="kontak" placeholder="Kontak" required>
+            <button type="submit">Tambah Alumni</button>
+        </form>
+
+        <h2>Daftar User/Admin</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="userTable">
+                <!-- Data user/admin akan dimuat di sini -->
+            </tbody>
+        </table>
+
+        <h2>Daftar Alumni</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Riwayat Pendidikan</th>
+                    <th>Riwayat Pekerjaan</th>
+                    <th>Kontak</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="alumniTable">
+                <!-- Data alumni akan dimuat di sini -->
+            </tbody>
+        </table>
+
+        <div class="footer">
+            &copy; 2024 Perusahaan Anda
+        </div>
     </div>
-    
-    <h2>Tambah Data User/Admin</h2>
-    <form id="addUserForm">
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <select id="role">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select>
-        <button type="submit">Tambah User/Admin</button>
-    </form>
-
-    <h2>Tambah Data Alumni</h2>
-    <form id="addAlumniForm">
-        <input type="text" id="nama" placeholder="Nama" required>
-        <textarea id="riwayatPendidikan" placeholder="Riwayat Pendidikan" required></textarea>
-        <textarea id="riwayatPekerjaan" placeholder="Riwayat Pekerjaan" required></textarea>
-        <input type="text" id="kontak" placeholder="Kontak" required>
-        <button type="submit">Tambah Alumni</button>
-    </form>
-
-    <h2>Daftar User/Admin</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Role</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody id="userTable">
-            <!-- Data user/admin akan dimuat di sini -->
-        </tbody>
-    </table>
-
-    <h2>Daftar Alumni</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Nama</th>
-                <th>Riwayat Pendidikan</th>
-                <th>Riwayat Pekerjaan</th>
-                <th>Kontak</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody id="alumniTable">
-            <!-- Data alumni akan dimuat di sini -->
-        </tbody>
-    </table>
 
     <script>
         function loadUsers() {
