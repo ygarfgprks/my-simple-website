@@ -6,17 +6,18 @@
     <title>Daftar Alumni</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #e9ecef;
+            color: #333;
         }
         .container {
             max-width: 900px;
             margin: auto;
             background: white;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             position: relative;
         }
@@ -24,6 +25,8 @@
             text-align: center;
             margin-bottom: 20px;
             position: relative;
+            border-bottom: 3px solid #007bff;
+            padding-bottom: 20px;
         }
         .header img {
             max-width: 150px;
@@ -32,7 +35,8 @@
         }
         h1 {
             margin: 20px 0;
-            color: #333;
+            color: #007bff;
+            font-size: 2em;
         }
         ul {
             list-style-type: none;
@@ -55,9 +59,12 @@
             border-radius: 4px;
             cursor: pointer;
             margin: 0 5px;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         button:hover {
             background-color: #0056b3;
+            transform: scale(1.05);
         }
         .actions {
             position: absolute;
@@ -74,37 +81,46 @@
             text-decoration: none;
             color: #007bff;
             font-weight: bold;
+            font-size: 16px;
         }
         a:hover {
             text-decoration: underline;
         }
-        .logout-btn {
+        .logout-btn, .admin-btn {
             position: absolute;
             top: 10px;
-            right: 10px;
-            background-color: #dc3545;
-            color: white;
             padding: 8px 12px;
             border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
+            font-size: 14px;
+        }
+        .logout-btn {
+            right: 10px;
+            background-color: #dc3545;
+            color: white;
         }
         .logout-btn:hover {
             background-color: #c82333;
         }
         .admin-btn {
-            position: absolute;
-            top: 10px;
             right: 100px;
             background-color: #28a745;
             color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
         }
         .admin-btn:hover {
             background-color: #218838;
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logout-btn, .admin-btn {
+                position: relative;
+                display: block;
+                margin: 10px auto;
+            }
+            .admin-btn {
+                right: auto;
+            }
         }
     </style>
 </head>
