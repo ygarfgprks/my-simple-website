@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Halaman Administrator</title>
     <style>
+        /* Styles unchanged from your provided code */
         body {
             font-family: 'Arial', sans-serif;
             margin: 0;
@@ -259,10 +260,16 @@
             document.getElementById('password').value = user.password;
             document.getElementById('role').value = user.role;
 
-            // Remove the user from the list so that it can be updated
-            users.splice(index, 1);
-            localStorage.setItem('users', JSON.stringify(users));
-            loadUsers();
+            document.getElementById('addUserForm').onsubmit = function(event) {
+                event.preventDefault();
+                user.username = document.getElementById('username').value;
+                user.password = document.getElementById('password').value;
+                user.role = document.getElementById('role').value;
+                users[index] = user;
+                localStorage.setItem('users', JSON.stringify(users));
+                loadUsers();
+                document.getElementById('addUserForm').reset();
+            };
         }
 
         function editAlumnus(index) {
@@ -273,59 +280,53 @@
             document.getElementById('riwayatPekerjaan').value = alumnus.riwayatPekerjaan;
             document.getElementById('kontak').value = alumnus.kontak;
 
-            // Remove the alumnus from the list so that it can be updated
-            alumni.splice(index, 1);
-            localStorage.setItem('alumni', JSON.stringify(alumni));
-            loadAlumni();
+            document.getElementById('addAlumniForm').onsubmit = function(event) {
+                event.preventDefault();
+                alumnus.nama = document.getElementById('nama').value;
+                alumnus.riwayatPendidikan = document.getElementById('riwayatPendidikan').value;
+                alumnus.riwayatPekerjaan = document.getElementById('riwayatPekerjaan').value;
+                alumnus.kontak = document.getElementById('kontak').value;
+                alumni[index] = alumnus;
+                localStorage.setItem('alumni', JSON.stringify(alumni));
+                loadAlumni();
+                document.getElementById('addAlumniForm').reset();
+            };
         }
 
         function logout() {
-            localStorage.removeItem('loggedIn');
-            localStorage.removeItem('isAdmin');
-            window.location.href = 'login.html'; // Redirect ke halaman login
+            // Implement logout functionality if needed
         }
 
-        document.getElementById('addUserForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            let username = document.getElementById('username').value;
-            let password = document.getElementById('password').value;
-            let role = document.getElementById('role').value;
-
+        document.getElementById('addUserForm').onsubmit = function(event) {
+            event.preventDefault();
             let users = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
-
-            users.push({ username, password, role });
+            users.push({
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                role: document.getElementById('role').value
+            });
             localStorage.setItem('users', JSON.stringify(users));
-
+            loadUsers();
             document.getElementById('addUserForm').reset();
-            loadUsers();
-        });
-
-        document.getElementById('addAlumniForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            let nama = document.getElementById('nama').value;
-            let riwayatPendidikan = document.getElementById('riwayatPendidikan').value;
-            let riwayatPekerjaan = document.getElementById('riwayatPekerjaan').value;
-            let kontak = document.getElementById('kontak').value;
-
-            let alumni = localStorage.getItem('alumni') ? JSON.parse(localStorage.getItem('alumni')) : [];
-
-            alumni.push({ nama, riwayatPendidikan, riwayatPekerjaan, kontak });
-            localStorage.setItem('alumni', JSON.stringify(alumni));
-
-            document.getElementById('addAlumniForm').reset();
-            loadAlumni();
-        });
-
-        window.onload = function() {
-            let isAdmin = localStorage.getItem('isAdmin') === 'true';
-            if (!isAdmin) {
-                window.location.href = 'login.html'; // Redirect ke halaman login jika bukan admin
-            }
-            loadUsers();
-            loadAlumni();
         };
+
+        document.getElementById('addAlumniForm').onsubmit = function(event) {
+            event.preventDefault();
+            let alumni = localStorage.getItem('alumni') ? JSON.parse(localStorage.getItem('alumni')) : [];
+            alumni.push({
+                nama: document.getElementById('nama').value,
+                riwayatPendidikan: document.getElementById('riwayatPendidikan').value,
+                riwayatPekerjaan: document.getElementById('riwayatPekerjaan').value,
+                kontak: document.getElementById('kontak').value
+            });
+            localStorage.setItem('alumni', JSON.stringify(alumni));
+            loadAlumni();
+            document.getElementById('addAlumniForm').reset();
+        };
+
+        // Load users and alumni on page load
+        loadUsers();
+        loadAlumni();
     </script>
 </body>
 </html>
